@@ -15,7 +15,15 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        var random = new Random();
+        var blogs = Enumerable.Range(1, 20).Select(x => new Models.Blog
+        {
+            Name = $"Blog {x}",
+            DateCreated = DateTimeOffset.Now.AddDays(random.Next(-10, 10)).AddMinutes(random.Next(-59, 59)),
+            ImageSrc = "https://via.placeholder.com/468x240"
+        }).ToList();
+        
+        return View(blogs);
     }
 
     public IActionResult Privacy()
